@@ -9,12 +9,22 @@
 using ImgDot = std::tuple<unsigned char, unsigned char, unsigned char>;
 
 class ImageGenerator {
-    unsigned int width;
-    unsigned int height;
-    std::vector<std::vector<ImgDot>> img;
+        struct CellBorders {
+            unsigned int x_begin;
+            unsigned int x_end;
+            unsigned int y_begin;
+            unsigned int y_end;
+        };
+
+        unsigned int width;
+        unsigned int height;
+        std::vector<std::vector<ImgDot>> img;
 
         void addVerticalBorders(unsigned int step);
         void addHorizontalBorders(unsigned int step);
+
+        int getCorrection(const Field &f);
+        void addCellHeight(const CellBorders &c, unsigned char val);
 
     public:
         ImageGenerator(unsigned int width, unsigned int height) : width(width), height(height)
@@ -23,6 +33,7 @@ class ImageGenerator {
         }
 
         void addBorders(const Field &field);
+        void addHeights(const Field &heights);
 
         unsigned int getWidth() const { return width; }
         unsigned int getHeight() const { return height; }
